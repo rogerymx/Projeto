@@ -16,7 +16,7 @@ router.get("/",(req, res) => {
     })
 })
 
-router.post("/",(req, res) => {
+router.post("/", (req, res) => {
     if(!req.body.sabor || req.body.sabor == null || typeof req.body.sabor == undefined){
         res.status(422).json({message:'Sabor inválido!'})
     }
@@ -32,6 +32,7 @@ router.post("/",(req, res) => {
     if(!req.body.fruta || req.body.fruta == null || typeof req.body.fruta == undefined){
         res.status(422).json({message:'Fruta inválida!'})
     }
+    
     const novoSorvete = {
         sabor : req.body.sabor,
         tamanho : req.body.tamanho,
