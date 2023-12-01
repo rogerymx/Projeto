@@ -1,16 +1,19 @@
 /*imports*/
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const rotaSorvetes = require('../routes/Sorvetes')
-require('dotenv').config
+const rotaUsers = require('../routes/Users')
 
 const app = express()
 app.use('/sorvetes', rotaSorvetes)
+app.use('/user', rotaUsers)
 const port = 3000
 
 /*Config responsividade do json*/
 app.use(express.json());
 
+/* Conexao e abertura da porta 3000 */
 const dbUser = process.env.DB_USER
 const dbPass = process.env.DB_PASS
 
