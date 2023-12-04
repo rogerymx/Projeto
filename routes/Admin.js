@@ -76,6 +76,14 @@ router.put('/alterar/:nome', verifAdmin, (req, res) => {
     })
 })
 
+/* Rota para exclusão de usuário */
+router.delete('/delete/:nome', verifAdmin, (req, res) => {
+    User.deleteOne({nome:req.params.nome}).then(user => {
+        res.status(200).json({message:'Usuário deletado com sucesso', nome:user.nome})
+    }).catch((error) => {
+        res.status(500).json({message:'Erro interno no servidor', error})
+    })
+})
 
 
 module.exports = router
