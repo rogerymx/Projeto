@@ -18,16 +18,22 @@ router.get("/",(req, res) => {
 })
 
 router.post("/", verifToken, verifAdmin, (req, res) => {
+    console.log('Dados recebidos na requisição:', req.body);
+
     const novoPedido = {
-        idVenda : req.body.idVenda,
-        sorvete : req.body.sorvete,
-        observacao : req.body.observacao
-    }
+        idVenda: req.body.idVenda,
+        sorvetes: req.body.sorvetes, 
+        observacao: req.body.observacao
+    };
+
+    console.log('Novo pedido a ser salvo:', novoPedido);
+
     new Pedido(novoPedido).save().then(() => {
-        res.status(201).json({message:'Pedido adicionado com sucesso'})
+        res.status(201).json({ message: 'Pedido adicionado com sucesso' });
     }).catch((error) => {
-        res.status(500).json({message:'Erro interno no servidor: ', error})
-    })
-})
+        console.error('Erro ao criar o pedido:', error);
+        res.status(500).json({ message: 'Erro interno no servidor', error });
+    });
+});
 
 module.exports = router

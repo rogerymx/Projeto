@@ -6,11 +6,11 @@ const Pedido = new Schema({
         type: Number,
         required: true
     },
-    sorvete: {
+    sorvetes: [{
         type: Schema.Types.ObjectId,
-        ref: 'sorvetes',
+        ref: 'Sorvetes',
         required: true
-    },
+    }],
     observacao: {
         type: String,
         required: false

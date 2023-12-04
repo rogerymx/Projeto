@@ -59,29 +59,31 @@ router.post("/register", (req, res) => {
     })
 })
 
-/* Rota para login */
-router.post("/login", (req,res) => {
-    const {email, senha} = req.body
+/* Rota para login pública */
+router.post("/login", (req, res) => {
+    const { email, senha } = req.body;
 
     /* Validacoes */
-    if(!email || email == null || typeof email == undefined){
-        res.status(422).json({message:'Email está em branco ou é inválido!'})
+    if (!email) {
+        return res.status(422).json({ message: 'Email está em branco ou é inválido!' });
     }
-    if(!senha || senha == null || typeof nome == undefined){
-        res.status(422).json({message:'Senha está em branco ou é inválido!'})
+    if (!senha) {
+        return res.status(422).json({ message: 'Senha está em branco ou é inválida!' });
     }
 
     /* Verificação se o usuário existe */
-    User.findOne({email: email, senha: senha}).then((usuario) => {
-        if(!usuario){
-            res.status(404).json({message:'Usuário não existente!'})
-        }else{
-            /* Criação do token */
-                const token = jwt.sign({userid: usuario._id, isAdmin: usuario.isAdmin}, SECRET)
-                res.status(201).json({message:'Login realizado com sucesso!', token})          
+    User.findOne({ email: email, senha: senha }).then((usuario) => {
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuário não existente!' });
         }
-    })
-})
+
+        /* Criação do token */
+        const token = jwt.sign({ userid: usuario._id, isAdmin: usuario.isAdmin }, SECRET);
+        return res.status(201).json({ message: 'Login realizado com sucesso!', token });
+    }).catch((error) => {
+        return res.status(500).json({ message: 'Erro interno no servidor', error });
+    });
+});
 
 /* Rota alteração de usuário */
 router.put('/alterar', verifToken, (req, res) => {
@@ -92,7 +94,7 @@ router.put('/alterar', verifToken, (req, res) => {
         user.senha = req.body.senha
 
         user.save().then(() => {
-            res.status(201).json({message:'Sorvete editado com sucesso!'})
+            res.status(201).json({message:'Usuário editado com sucesso!'})
         }).catch((error) => {
             res.status(500).json({message:'Erro interno no servidor!', error})
         })
