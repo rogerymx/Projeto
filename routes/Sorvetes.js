@@ -6,7 +6,7 @@ const Sorvete = mongoose.model('Sorvetes')
 const verifToken = require('../Auth/VerificarToken')
 const verifAdmin = require('../Auth/VerificarAdmin')
 
-router.get("/",(req, res) => {
+router.get("/", verifToken,(req, res) => {
     Sorvete.find().then(sorvetes => {
         if(sorvetes.length == 0){
             res.status(404).json({message:'Nenhum sorvete cadastrado!'})

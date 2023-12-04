@@ -1,3 +1,15 @@
+/* Verificação se as dependências estão instaladas */
+const fs = require('fs');
+var path = require('path');
+const { execSync } = require('child_process');
+
+const nodeModulesExists = fs.existsSync(path.join(__dirname, 'node_modules'));
+
+if (!nodeModulesExists) {
+  console.log('Instalando dependências, por favor aguarde...');
+  execSync('npm install --force-sync');
+}
+
 /* Imports */
 require('dotenv').config()
 const express = require('express')

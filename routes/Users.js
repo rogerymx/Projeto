@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET_JWT
 require('../models/User')
 const User = mongoose.model('users')
+const verifToken = require('../Auth/VerificarToken')
+const verifAdmin = require('../Auth/VerificarAdmin')
 
 /* Rota para registro */
 router.post("/register", (req, res) => {
@@ -70,18 +72,32 @@ router.post("/login", (req,res) => {
     }
 
     /* Verificação se o usuário existe */
-    User.findOne({email: email}).then((usuario) => {
+    User.findOne({email: email, senha: senha}).then((usuario) => {
         if(!usuario){
             res.status(404).json({message:'Usuário não existente!'})
         }else{
-            /* Verificação se a senha está correta */
-            if(usuario.senha == senha){
+            /* Criação do token */
                 const token = jwt.sign({userid: usuario._id, isAdmin: usuario.isAdmin}, SECRET)
-                res.status(201).json({message:'Login realizado com sucesso!', token})
-            }
+                res.status(201).json({message:'Login realizado com sucesso!', token})          
         }
     })
-
 })
+
+/* Rota alteração de usuário */
+router.put('/alterar', verifToken, (req, res) => {
+    const idUser = req.user._id
+    User.findOne({_id:idUser}).then((user) => {
+        user.nome = req.body.nome
+        user.email = req.body.email
+        user.senha = req.body.senha
+
+        user.save().then(() => {
+            res.status(201).json({message:'Sorvete editado com sucesso!'})
+        }).catch((error) => {
+            res.status(500).json({message:'Erro interno no servidor!', error})
+        })
+    })
+})
+
 
 module.exports = router
