@@ -15,7 +15,7 @@ const Pedido = mongoose.model('pedidos')
 
 
 /* Rota para inserir dados no banco */
-router.get('/', verifToken, (req, res) => {
+router.get('/', verifToken, verifAdmin, (req, res) => {
     let sorvetesIds = [];
 
     Sorvete.insertMany([
