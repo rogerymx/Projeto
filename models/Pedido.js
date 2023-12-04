@@ -11,11 +11,6 @@ const Pedido = new Schema({
         ref: 'sorvetes',
         required: true
     },
-    recheio: {
-        type: Schema.Types.ObjectId,
-        ref: 'recheios',
-        required: true
-    },
     observacao: {
         type: String,
         required: false
