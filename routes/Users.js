@@ -7,7 +7,7 @@ require('../models/User')
 const User = mongoose.model('users')
 
 /* Rota para registro */
-router.post("/", (req, res) => {
+router.post("/register", (req, res) => {
     const {nome, email, senha, confSenha} = req.body
 
     /* Validacoes */

@@ -4,6 +4,7 @@ const router = express.Router()
 require('../models/Sorvete')
 const Sorvete = mongoose.model('Sorvetes')
 const verifToken = require('../Auth/VerificarToken')
+const verifAdmin = require('../Auth/VerificarAdmin')
 
 router.get("/",(req, res) => {
     Sorvete.find().then(sorvetes => {
@@ -17,7 +18,7 @@ router.get("/",(req, res) => {
     })
 })
 
-router.post("/", verifToken, (req, res) => {
+router.post("/", verifToken, verifAdmin, (req, res) => {
     if(!req.body.sabor || req.body.sabor == null || typeof req.body.sabor == undefined){
         res.status(422).json({message:'Sabor inválido!'})
     }

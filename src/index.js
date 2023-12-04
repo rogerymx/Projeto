@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const rotaSorvetes = require('../routes/Sorvetes')
 const rotaUsers = require('../routes/Users')
+const rotaPedidos = require('../routes/Pedidos')
 const bodyparser = require('body-parser')
 const dbUser = process.env.DB_USER
 const dbPass = process.env.DB_PASS
@@ -18,7 +19,8 @@ app.use(express.json());
 
 /* Rotas */
 app.use('/sorvetes', rotaSorvetes)
-app.use('/user', rotaUsers)
+app.use('/users', rotaUsers)
+app.use('/pedidos', rotaPedidos)
 
 /* Conexao e abertura da porta 3000 */
 
