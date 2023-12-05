@@ -73,6 +73,7 @@ router.post("/login", (req, res) => {
 
     /* Verificação se o usuário existe */
     User.findOne({ email: email, senha: senha }).then((usuario) => {
+        console.log(usuario)
         if (!usuario) {
             return res.status(404).json({ message: 'Usuário não existente!' });
         }

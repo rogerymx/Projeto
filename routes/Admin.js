@@ -56,9 +56,7 @@ router.put('/alterar/:nome', verifAdmin, (req, res) => {
         return
     }
 
-    console.log(novoNome);
     User.findOne({ nome: nome }).then((user) => {
-        console.log(nome)
         if (!user) {
             res.status(404).json({ message: 'Usuário não encontrado!' })
             return
