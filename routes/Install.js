@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         const pedidosExistem = await Pedido.exists();
 
         if (sorvetesExistem && usuariosExistem && pedidosExistem) {
-            return res.status(200).json({ message: 'Os dados já existem no banco' });
+            return res.status(200).json({ message: 'Dados já foram inicializados, ou existem dados dentro do banco' });
         }
 
         // Se algum dos dados não existir, realiza a inserção
@@ -37,11 +37,11 @@ router.get('/', async (req, res) => {
         ]).then((sorvetes) => {
             sorvetesIds = sorvetes.map(sorvete => sorvete._id.toString());
             return Usuario.insertMany([
-                { nome: 'admin', email: 'admin@admin.com', senha: '123', isAdmin: 1},
+                { nome: 'admin', email: 'admin@admin.com', senha: '123', isAdmin: 1 },
+                { nome: 'user1', email: 'user1@user1.com', senha: '123' },
                 { nome: 'user2', email: 'user1@user2.com', senha: '123' },
                 { nome: 'user3', email: 'user1@user3.com', senha: '123' },
-                { nome: 'user4', email: 'user1@user4.com', senha: '123' },
-                { nome: 'user5', email: 'user1@user5.com', senha: '123' }
+                { nome: 'user4', email: 'user1@user4.com', senha: '123' }
             ]);
         });
 
