@@ -74,15 +74,6 @@ router.put('/alterar/:nome', verifAdmin, (req, res) => {
     })
 })
 
-/* Rota para exclusão de usuário */
-// router.delete('/delete/:nome', verifAdmin, (req, res) => {
-//     User.deleteOne({nome:req.params.nome}).then(user => {
-//         res.status(200).json({message:'Usuário deletado com sucesso'})
-//     }).catch((error) => {
-//         res.status(500).json({message:'Erro interno no servidor', error})
-//     })
-// })
-
 // Rota para deletar um usuário (verificação de administrador dentro da função)
 router.delete('/delete/:nome', verifAdmin, (req, res) => {
     // Verifica se o nome do usuário a ser excluído é fornecido
@@ -116,6 +107,19 @@ router.delete('/delete/:nome', verifAdmin, (req, res) => {
     });
 });
 
+/* Rota para um usuário excluir a própria conta */
+router.delete('/delete-myself', verifAdmin, (req, res) => {
+    const userIdFromToken = req.user._id;
 
+    User.deleteOne({ _id: userIdFromToken }).then(result => {
+        if (result.deletedCount > 0) {
+            res.status(200).json({ message: 'Conta excluída com sucesso' });
+        } else {
+            res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+    }).catch((error) => {
+        res.status(500).json({ message: 'Erro interno no servidor', error });
+    });
+});
 
 module.exports = router
