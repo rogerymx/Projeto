@@ -8,15 +8,12 @@ const verifAdmin = require("../Auth/VerificarAdmin");
 
 router.get("/", verifToken, async (req, res) => {
   try {
-    // Parâmetros da paginação
-    const limite = parseInt(req.query.limite) || 5; // Valor padrão: 5
-    const pagina = parseInt(req.query.pagina) || 1; // Valor padrão: 1
+    const limite = parseInt(req.query.limite) || 5;
+    const pagina = parseInt(req.query.pagina) || 1;
 
-    // Calcula o ponto de início com base na página e no limite
-    const pontoInicio = (pagina - 1) * limite;
+    const skip = (pagina - 1) * limite;
 
-    // Consulta ao banco de dados com paginação
-    const sorvetes = await Sorvete.find().skip(pontoInicio).limit(limite);
+    const sorvetes = await Sorvete.find().skip(skip).limit(limite);
 
     if (sorvetes.length === 0) {
       return res.status(404).json({ message: "Nenhum sorvete encontrado!" });

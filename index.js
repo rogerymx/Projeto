@@ -14,8 +14,8 @@ if (!nodeModulesExists) {
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const swaggerUI = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerui = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 const rotaSorvetes = require("./routes/Sorvetes");
 const rotaUsers = require("./routes/Users");
@@ -40,6 +40,7 @@ app.use("/users", rotaUsers);
 app.use("/pedidos", rotaPedidos);
 app.use("/install", rotaInstall);
 app.use("/admin", rotaAdmin);
+app.use("/docs", swaggerui.serve, swaggerui.setup(swaggerDocument));
 
 /* Conexao e abertura da porta 3000 */
 mongoose

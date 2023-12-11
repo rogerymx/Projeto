@@ -5,11 +5,11 @@ require("../models/Pedido");
 const Pedido = mongoose.model("pedidos");
 const verifToken = require("../Auth/VerificarToken");
 const verifAdmin = require("../Auth/VerificarAdmin");
-const limites = [5, 10, 30];
 
 router.get("/", (req, res) => {
   const limite = parseInt(req.query.limite) || 5;
   const pagina = parseInt(req.query.pagina) || 1;
+
   const skip = (pagina - 1) * limite;
 
   Pedido.find()

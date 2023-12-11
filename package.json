@@ -4,7 +4,8 @@
   "description": "Projeto de backend com sistema de CRUD",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-swagger": "node swaggerConfig.js"
   },
   "author": "Roger",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "mongoose": "^8.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.7"
   }
 }
